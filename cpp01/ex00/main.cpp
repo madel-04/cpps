@@ -12,8 +12,6 @@
 
 #include "Zombie.hpp"
 
-Zombie* zombieHorde(int N, std::string name);
-void randomChump(const std::string &name);
 /*
 int main()
 {

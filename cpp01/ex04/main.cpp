@@ -75,5 +75,5 @@ int main(int argc, char* argv[]) {
 · Open Files: Use std::ifstream for reading and std::ofstream for writing.
 · Error Handling: Check if the files are successfully opened.
 · Copy Content: Use std::getline to read each line from the source file and write it to the destination file.
-· Close Files: Always close files to release resources.
+ ! Close Files: Always close files to release resources.
 */

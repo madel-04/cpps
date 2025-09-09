@@ -26,10 +26,11 @@ class Zombie
 
         void setName(const std::string &name);
         void announce() const;
+
     private:
         std::string _name;
 };
 
-Zombie* newZombie(const std::string &name);
+Zombie* zombieHorde(int N, std::string name);
 
 #endif

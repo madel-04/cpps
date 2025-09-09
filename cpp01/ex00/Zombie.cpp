@@ -13,16 +13,21 @@
 #include "Zombie.hpp"
 
 Zombie::Zombie() : _name("") {}
+
 Zombie::Zombie(const std::string &name) : _name(name) {}
-Zombie::~Zombie() {
-    std::cout << _name << " destroyed\n";}
-void Zombie::setName(const std::string &name) {
+
+Zombie::~Zombie()
+{
+    std::cout << _name << " destroyed\n";
+}
+
+void Zombie::setName(const std::string &name)
+{
     _name = name;
-    }
-void Zombie::announce() const {
+}
+
+void Zombie::announce() const
+{
     std::cout << _name << ": BraiiiiiiinnnzzzZ...\n"<< std::endl;
 }
 
-Zombie* newZombie(const std::string &name) {
-    return new Zombie(name);
-}

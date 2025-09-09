@@ -41,3 +41,5 @@ void Harl::complain(std::string level) {
     }
     std::cerr << "Invalid level. Use DEBUG, INFO, WARNING or ERROR." << std::endl;
 }
+
+//this representa el objeto actual de clase Harl
