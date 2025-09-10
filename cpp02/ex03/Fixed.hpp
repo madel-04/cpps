@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: madel-va <madel-va@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/07 00:00:00 by madel-va          #+#    #+#             */
-/*   Updated: 2025/08/07 00:00:00 by madel-va         ###   ########.fr       */
+/*   Created: 2025/05/17 18:43:59 by madel-va          #+#    #+#             */
+/*   Updated: 2025/05/17 19:29:12 by madel-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,38 +26,38 @@ class Fixed
         Fixed(const Fixed& other); // Copy constructor
         Fixed &operator=(const Fixed &other); // Copy assignment operator
         ~Fixed(); // Destructor
-        
+
+        // Comparison operators
+        bool operator>(const Fixed& other) const;
+        bool operator<(const Fixed& other) const;
+        bool operator>=(const Fixed& other) const;
+        bool operator<=(const Fixed& other) const;
+        bool operator==(const Fixed& other) const;
+        bool operator!=(const Fixed& other) const;
+
+        // Arithmetic operators
+        Fixed operator+(const Fixed& other) const;
+        Fixed operator-(const Fixed& other) const;
+        Fixed operator*(const Fixed& other) const;
+        Fixed operator/(const Fixed& other) const;
+
+        // Increment/Decrement operators
+        Fixed& operator++();      // Pre-increment
+        Fixed operator++(int);    // Post-increment
+        Fixed& operator--();      // Pre-decrement
+        Fixed operator--(int);    // Post-decrement
+
+        // Static min/max functions
+        static Fixed& min(Fixed& a, Fixed& b);
+        static const Fixed& min(const Fixed& a, const Fixed& b);
+        static Fixed& max(Fixed& a, Fixed& b);
+        static const Fixed& max(const Fixed& a, const Fixed& b);
+
         int getRawBits(void) const; // Getter
         void setRawBits(int const raw); // Setter
 
         float toFloat( void ) const;
         int toInt( void ) const;
-
-        // Comparison operators
-        bool operator>(const Fixed &other) const;
-        bool operator<(const Fixed &other) const;
-        bool operator>=(const Fixed &other) const;
-        bool operator<=(const Fixed &other) const;
-        bool operator==(const Fixed &other) const;
-        bool operator!=(const Fixed &other) const;
-
-        // Arithmetic operators
-        Fixed operator+(const Fixed &other) const;
-        Fixed operator-(const Fixed &other) const;
-        Fixed operator*(const Fixed &other) const;
-        Fixed operator/(const Fixed &other) const;
-
-        // Increment/decrement operators
-        Fixed &operator++(); // Pre-increment
-        Fixed operator++(int); // Post-increment
-        Fixed &operator--(); // Pre-decrement
-        Fixed operator--(int); // Post-decrement
-
-        // Static min/max functions
-        static Fixed &min(Fixed &a, Fixed &b);
-        static const Fixed &min(const Fixed &a, const Fixed &b);
-        static Fixed &max(Fixed &a, Fixed &b);
-        static const Fixed &max(const Fixed &a, const Fixed &b);
 
     private:
         int                 _fixedPointValue;
@@ -67,3 +67,18 @@ class Fixed
 std::ostream &operator<<(std::ostream &os, const Fixed &fixed);
 
 #endif
+
+/*
+std::cout << a;
+Lo que estás haciendo es imprimir algo (en este caso a) en la consola.
+Ese << se llama operador de inserción. Es una forma especial de decir:
+"envía esto a la salida estándar (la consola)".
+
+Cuando usas std::cout << a;, el compilador de C++ necesita saber cómo
+imprimir ese objeto a.
+
+Esto funciona automáticamente con tipos como:
+int, float, char, std::string, etc.
+Pero si a es un objeto de una clase que tú has creado (como tu clase Fixed),
+entonces el compilador no sabe cómo imprimirlo. Por eso te da este error:
+*/
