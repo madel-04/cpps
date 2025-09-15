@@ -30,9 +30,9 @@ class ClapTrap
     ClapTrap(const std::string& name); //Constructor con nombre
     ClapTrap(const ClapTrap& other); // Constructor por copia
     ClapTrap& operator=(const ClapTrap& other); // Operador de asignación
-    virtual ~ClapTrap();   //Destructor
+    ~ClapTrap();   //Destructor
 
-    virtual void attack(const std::string& target);
+    void attack(const std::string& target);
     void takeDamage(unsigned int amount);
     void beRepaired(unsigned int amount);
 };
