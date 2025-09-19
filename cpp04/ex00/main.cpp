@@ -34,6 +34,12 @@ int main() {
     std::cout << p->getType() << std::endl; // prints "WrongCat"
     p->makeSound(); // calls WrongAnimal::makeSound (WRONG behavior)
 
+/*
+uando usas un puntero de tipo WrongAnimal que apunta a un objeto
+WrongCat y llamas a makeSound(), se ejecuta el método de la clase
+base (WrongAnimal), no el de la derivada (WrongCat).
+*/
+
     wrongDerived.makeSound(); // calls WrongCat::makeSound (direct object)
 
     separator("OCF: copy and assignment");

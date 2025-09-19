@@ -15,3 +15,9 @@ public:
 };
 
 #endif // WRONGCAT_HPP
+
+/*
+¿Por qué es útil? Esto muestra que, sin métodos virtuales, el 
+comportamiento polimórfico no funciona: el método de la clase base 
+se ejecuta aunque el objeto sea de la clase derivada.
+*/
