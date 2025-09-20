@@ -52,13 +52,21 @@ ex02/
 ├── PresidentialPardonForm.hpp / PresidentialPardonForm.cpp
 
 ex03/
+
 ├── Makefile
+
 ├── main.cpp
+
 ├── Bureaucrat.hpp / Bureaucrat.cpp
+
 ├── AForm.hpp / AForm.cpp
+
 ├── ShrubberyCreationForm.hpp / ShrubberyCreationForm.cpp
+
 ├── RobotomyRequestForm.hpp / RobotomyRequestForm.cpp
+
 ├── PresidentialPardonForm.hpp / PresidentialPardonForm.cpp
+
 ├── Intern.hpp / Intern.cpp
 
 
@@ -137,14 +145,14 @@ You should use ```const```when an attribute or method should not modify the obje
 
 ### **ex00 – Bureaucrat**
 - Class `Bureaucrat`:
-  - `const std::string name`
-  - `int grade` (1 = best, 150 = worst)
+    - `const std::string name`
+    - `int grade` (1 = best, 150 = worst)
 - Exceptions:
-  - `GradeTooHighException`
-  - `GradeTooLowException`
+    - `GradeTooHighException`
+    - `GradeTooLowException`
 - Methods:
-  - `getName()`, `getGrade()`
-  - `incrementGrade()`, `decrementGrade()` (throws on out-of-bounds)
+    - `getName()`, `getGrade()`
+    - `incrementGrade()`, `decrementGrade()` (throws on out-of-bounds)
 - Operator `<<` overload:
 
 
@@ -152,15 +160,15 @@ You should use ```const```when an attribute or method should not modify the obje
 
 ### **ex01 – Form**
 - Class `Form`:
-- `const std::string name`
-- `bool isSigned`
-- `const int gradeToSign`
-- `const int gradeToExecute`
+  -  `const std::string name`
+  - `bool isSigned`
+  - `const int gradeToSign`
+  - `const int gradeToExecute`
 - Exceptions: `GradeTooHighException`, `GradeTooLowException`
-- Methods:
-- Getters for all attributes
-- `beSigned(Bureaucrat&)`
-- `Bureaucrat` gains `signForm(Form&)`
+  - Methods:
+  - Getters for all attributes
+  - `beSigned(Bureaucrat&)`
+  - `Bureaucrat` gains `signForm(Form&)`
 - Operator `<<` overload prints form info.
 
 ---
@@ -168,24 +176,24 @@ You should use ```const```when an attribute or method should not modify the obje
 ### **ex02 – Abstract Forms**
 - Convert `Form` into **abstract class `AForm`**.
 - Add derived forms:
-- **ShrubberyCreationForm** → creates `<target>_shrubbery` with ASCII trees 🌳
-- **RobotomyRequestForm** → 50% chance of successful robotomy 🤖
-- **PresidentialPardonForm** → `<target> has been pardoned by Zaphod Beeblebrox`
+  - **ShrubberyCreationForm** → creates `<target>_shrubbery` with ASCII trees 🌳
+  - **RobotomyRequestForm** → 50% chance of successful robotomy 🤖
+  - **PresidentialPardonForm** → `<target> has been pardoned by Zaphod Beeblebrox`
 - All require specific grades to sign/execute.
-- Bureaucrat:
-- `executeForm(AForm const & form)`
+  - Bureaucrat:
+    - `executeForm(AForm const & form)`
 
 ---
 
 ### **ex03 – Intern**
 - Class `Intern`:
-- `makeForm(std::string formName, std::string target)`
+  - `makeForm(std::string formName, std::string target)`
 - Creates forms:
-- `"shrubbery creation"`
-- `"robotomy request"`
-- `"presidential pardon"`
+  - `"shrubbery creation"`
+  - `"robotomy request"`
+  - `"presidential pardon"`
 - Prints:
-- Handles invalid names with an error message.
-- Implementation should **avoid excessive if/else chains**.
+  - Handles invalid names with an error message.
+  - Implementation should **avoid excessive if/else chains**.
 
 ---
