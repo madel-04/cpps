@@ -18,23 +18,37 @@ It introduces **exceptions**, **abstract classes**, and **polymorphism** by simu
 ## 📂 Project Structure
 
 ex00/
+
 ├── Makefile
+
 ├── main.cpp
+
 ├── Bureaucrat.hpp / Bureaucrat.cpp
 
 ex01/
+
 ├── Makefile
+
 ├── main.cpp
+
 ├── Bureaucrat.hpp / Bureaucrat.cpp
+
 ├── Form.hpp / Form.cpp
 
 ex02/
+
 ├── Makefile
+
 ├── main.cpp
+
 ├── Bureaucrat.hpp / Bureaucrat.cpp
+
 ├── AForm.hpp / AForm.cpp
+
 ├── ShrubberyCreationForm.hpp / ShrubberyCreationForm.cpp
+
 ├── RobotomyRequestForm.hpp / RobotomyRequestForm.cpp
+
 ├── PresidentialPardonForm.hpp / PresidentialPardonForm.cpp
 
 ex03/
