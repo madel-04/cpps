@@ -1,6 +1,7 @@
 # C++ Module 06
 
-[English](README.en.md) | [Español](README.md)
+[![en](https://img.shields.io/badge/lang-English-blue.svg)](README.en.md)
+[![es](https://img.shields.io/badge/lang-Español-red.svg)](README.md)
 
 
 
