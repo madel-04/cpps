@@ -1,5 +1,9 @@
 # C++ Module 05 – Bureaucracy Simulator
 
+[![en](https://img.shields.io/badge/lang-English-blue.svg)](README.md)
+[![es](https://img.shields.io/badge/lang-Español-red.svg)](README.es.md)
+
+
 This project is part of **42 École's C++ modules**.  
 It introduces **exceptions**, **abstract classes**, and **polymorphism** by simulating a dystopian bureaucracy with **Bureaucrats**, **Forms**, and an **Intern**.
 
