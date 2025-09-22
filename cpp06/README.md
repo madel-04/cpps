@@ -3,141 +3,153 @@
 [![en](https://img.shields.io/badge/lang-English-blue.svg)](README.en.md)
 [![es](https://img.shields.io/badge/lang-Español-red.svg)](README.md)
 
+
+
 ## Exercise 00: ScalarConverter
 
-### 📌 Enunciado resumido
-Implementar una clase **`ScalarConverter`** que contenga un único método estático:
+### 📌 Summary
+Implement a class **`ScalarConverter`** containing a single static method:
 
 ```cpp
 static void convert(const std::string& literal);
-```
-El método recibe una cadena que representa un literal de C++ y debe convertirlo a los cuatro tipos escalares básicos:
-- Char
-- Int
-- Float
-- Double
+````
 
-La clase **no debe ser instanciable** (constructores/destructores privados o borrados). 
+The method receives a string representing a C++ literal and must convert it into the four basic scalar types:
 
-#### Clase no instanciable
+* Char
+* Int
+* Float
+* Double
 
-Que no sea instanciable significa que nadie pueda hacer por ejemplo:
-```cpp
-Serializer s;             // constructor por defecto
-Serializer* p = new Serializer(); // constructor + destructor
-Serializer s2 = s;        // constructor de copia
-s = s2;                   // operador de asignación
+The class **must not be instantiable** (constructors/destructors private or deleted).
 
-```
-Para impedirlo, basta con declarar los constructores/destructores/copias como  *private*. De ese modo, cualquier intento de usarlos genera error de compilación.
+---
 
-No hace falta definirlos dentro del cpp porque nunca se van a usar. Nadie fuera de la clase va a poder llamarlos porque están privados y dentro de la misma clase tampoco los usamos. 
+### Exercise Objectives
 
-Como alternativa en C++ 11+, se puede hacer explicitamente con < delete >. 
+1. Detect the actual type of the literal received as `std::string`.
+2. Convert it into its base type (`char`, `int`, `float`, `double`).
+3. Explicitly convert it into the remaining scalar types.
+4. Display the result in a clear and precise format, as shown in the subject examples.
+5. Handle special cases:
 
-```cpp
-class Serializer {
-public:
-    static uintptr_t serialize(Data* ptr);
-    static Data* deserialize(uintptr_t raw);
+   * Pseudo-literals: `nan`, `nanf`, `+inf`, `-inf`, `+inff`, `-inff`.
+   * Out-of-range values (`int` overflow).
+   * Non-displayable characters.
 
-    Serializer() = delete;
-    Serializer(const Serializer&) = delete;
-    Serializer& operator=(const Serializer&) = delete;
-    ~Serializer() = delete;
-};
+---
 
-```
+### Key Concepts
 
+#### Type conversion in C++
 
-### Objetivos del ejercicio
-1. Detectar el tipo real del literal recibido como `std::string`.
-2. Convertirlo a su tipo base (char, int, float, double)
-3. Realizar conversiones explícitas al resto de tipos.
-4. Mostrar el resultado en un formato preciso y claro como muestra el enunciado en el ejemplo.
-5. Gestionar casos especiales:
-    - Psudo-litersles: nan, nanf,+inf, -inf, +inff, -inff
-    - Valores fuera de rango (`int` overflow)
-    - Caracteres no imprimibles
+* **Implicit cast**: the compiler automatically converts between compatible types (e.g., `int → double`).
+* **Explicit cast**: the programmer forces the conversion using `static_cast`, `dynamic_cast`, `reinterpret_cast` or `const_cast`.
+  For this exercise, only `static_cast` is needed.
 
-### Conceptos claves
+Example:
 
-#### Conversión de tipos en C++
-- **Cast implícito**: el compilador convierte automáticamente entre tipos compatibles (ej: int → double).
-
-- **Cast explícito**: el programador fuerza la conversión usando static_cast, dynamic_cast, reinterpret_cast o const_cast.
-Para este ejercicio basta con static_cast.
-
-Ejemplo:
 ```cpp
 double d = 42.0;
-int i = static_cast<int>(d);   // convierte double → int
-char c = static_cast<char>(i); // convierte int → char
+int i = static_cast<int>(d);   // convert double → int
+char c = static_cast<char>(i); // convert int → char
 ```
 
-#### Literales en C++
-- Char literal: 'a', 'Z'.
-- Int literal: 42, -7
-- Float literal: 4.2f, -0.0f. Siempre terminan en f.
-- Double literal: 4.2, -0.0.
-- Pseudo-literals: nan, nanf, +inf, -inf, +inff, -inff.
+---
 
-#### Librerias útiles
-- <string>: manipulación de cadenas.
-- <iostream>: entrada/salida.
-- <limits>: obtener rangos (std::numeric_limits<int>::max()).
-- <iomanip>: control de formato (std::setprecision).
-- <cmath>: funciones matemáticas (std::isnan, std::isinf).
-- <cctype>: comprobar caracteres (std::isdigit, isprint).
+#### Literals in C++
 
-#### Detección del tipo
-El algoritmo sigue reglas simples:
-- Char: longitud 1 y no es un dígito.
-- Int: solo dígitos (con + o - opcional).
-- Float: contiene . y termina en f o es pseudo-literal (nanf, +inff, -inff).
-- Double: contiene . y no termina en f, o es pseudo-literal (nan, +inf, -inf).
-- Otros: tipo no reconocido → conversiones imposibles.
+* Char literal: `'a'`, `'Z'`.
+* Int literal: `42`, `-7`.
+* Float literal: `4.2f`, `-0.0f`. Always ending in `f`.
+* Double literal: `4.2`, `-0.0`.
+* Pseudo-literals: `nan`, `nanf`, `+inf`, `-inf`, `+inff`, `-inff`.
 
-#### Manejo de excepciones
+---
 
-El valor se guarda como <double> para facillitar las conversiones a los demás tipos.
+#### Useful libraries
 
-- std::stoi, std::stoll, std::stof, std::stod pueden lanzar std::out_of_range o std::invalid_argument.
-- Capturar excepciones permite marcar conversiones imposibles sin detener la ejecución
+* `<string>`: string manipulation.
+* `<iostream>`: input/output.
+* `<limits>`: numeric ranges (`std::numeric_limits<int>::max()`).
+* `<iomanip>`: formatting (`std::setprecision`).
+* `<cmath>`: math functions (`std::isnan`, `std::isinf`).
+* `<cctype>`: character checks (`std::isdigit`, `isprint`).
 
-## Excercise 01: Serialization
+---
 
-### 📌 Enunciado resumido
-Implementar una clase **`Serializer`** que no pueda ser instanciada y que ofrezca dos métodos estáticos:
+#### Type detection
+
+The algorithm follows simple rules:
+
+* Char: length 1 and not a digit.
+* Int: only digits (optional `+` or `-`).
+* Float: contains `.` and ends with `f` or is a pseudo-literal (`nanf`, `+inff`, `-inff`).
+* Double: contains `.` and does not end with `f`, or is a pseudo-literal (`nan`, `+inf`, `-inf`).
+* Other: unrecognized type → conversions impossible.
+
+---
+
+#### Exception handling
+
+The value is stored as `double` to simplify conversions to other types.
+
+* `std::stoi`, `std::stoll`, `std::stof`, `std::stod` may throw `std::out_of_range` or `std::invalid_argument`.
+* Catching exceptions allows marking conversions as impossible without stopping execution.
+
+---
+
+## Exercise 01: Serialization
+
+### 📌 Summary
+
+Implement a class **`Serializer`** that cannot be instantiated and that provides two static methods:
 
 ```cpp
 static uintptr_t serialize(Data* ptr);
 static Data* deserialize(uintptr_t raw);
 ```
-serialize: convierte un puntero (Data*) en un entero sin signo (uintptr_t).
 
-deserialize: convierte ese entero (uintptr_t) de nuevo en un puntero (Data*).
+* `serialize`: converts a pointer (`Data*`) into an unsigned integer (`uintptr_t`).
+* `deserialize`: converts that integer (`uintptr_t`) back into a pointer (`Data*`).
 
-Además se debe definir una estructura Data con algunos miembros, y demostrar en un programa que serializar y luego deserializar devuelve el puntero al original.
+Additionally, a `Data` structure with some members must be defined, and a program must demonstrate that serializing and then deserializing returns the original pointer.
 
-### Objetivos del ejercicio
-1. Praticar la reinterpretación de punteros con <reinterpret_cast>
-2. Entender el uso del tipo uintptr_t para almadcenar direcciones de memoria.
-3. Comprobar que un puntero se puede "señalizar" en un entero y luego recuperar correctamente. 
-4. Usar una estructura con datos reales para validar el proceso.
+---
 
-### Conceptos claves
+### Exercise Objectives
 
-#### ¿Qué es uintptr_t?
-Es un entero sin signo definido en <cstdint>. Está garantizado par poder almacenar una dirección de memoria sin perdida de información
+1. Practice pointer reinterpretation with `reinterpret_cast`.
+2. Understand the use of `uintptr_t` for storing memory addresses.
+3. Verify that a pointer can be “serialized” into an integer and then recovered correctly.
+4. Use a structure with real data to validate the process.
+
+---
+
+### Key Concepts
+
+#### What is `uintptr_t`?
+
+It is an unsigned integer type defined in `<cstdint>`. It is guaranteed to be able to store a memory address without loss of information.
+
+Example:
 
 ```cpp
 int x = 10;
 int* ptr = &x;
 uintptr_t raw = reinterpret_cast<uintptr_t>(ptr);
+```
+
+---
+
+#### What is `reinterpret_cast`?
+
+It is a C++ cast that allows converting between pointer types and integers.
+It does not alter the value in memory, it simply **reinterprets the bits**.
 
 ```
 
-#### ¿Qué es reinterpret_cast?
+---
 
-Es un cast de C++ que permitr convertir entre tipos de punteros y enteros. No altera el valor en memoria, solo **reinterpreta los bits**. 
+¿Quieres que además te prepare un **README multilenguaje con enlaces y badges de idioma** para que quede más vistoso en GitHub?
+```
