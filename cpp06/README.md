@@ -147,9 +147,3 @@ uintptr_t raw = reinterpret_cast<uintptr_t>(ptr);
 It is a C++ cast that allows converting between pointer types and integers.
 It does not alter the value in memory, it simply **reinterprets the bits**.
 
-```
-
----
-
-¿Quieres que además te prepare un **README multilenguaje con enlaces y badges de idioma** para que quede más vistoso en GitHub?
-```
