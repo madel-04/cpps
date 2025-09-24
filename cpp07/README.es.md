@@ -37,3 +37,20 @@ public:
 ```
 
 La palabra clave typename se emplea para indicar que el parámetro es de tipo y puede usarse indistintamente con class en la declaración. Ambas cumplen la misma función en el contexto de templates, aunque typename es obligatoria en algunos contextos dentro de plantillas más complejas.
+
+## Excercise 02 Array
+
+### Summary
+Implementar una clase "plantilla" llamada <Array> que contiene elements de tipo T y que implementa unos comportamientos determinados especificados en el enunciado. 
+
+
+#### Archivos .tpp
+Un archivo .tpp es una convención en C++ para definir implementaciones de plantillas (templates). Se utiliza para separar la declaración de una clase o función plantilla (usualmente en un archivo .hpp o .h) de su implementación, que va en el .tpp. Esto ayuda a mantener el código organizado.
+
+En C++, las implementaciones de plantillas deben estar disponibles en el mismo archivo fuente que las declaraciones, o incluidas directamente, porque el compilador necesita ver el código completo de la plantilla para generar instancias. Por eso, el archivo .tpp suele incluirse al final del archivo de cabecera correspondiente usando #include "archivo.tpp".
+
+En resumen:
+
+.tpp = "template implementation file"
+Se usa para definir la implementación de clases o funciones plantilla
+Se incluye en el archivo de cabecera (.hpp) donde se declara la plantilla
