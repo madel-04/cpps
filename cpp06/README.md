@@ -12,7 +12,7 @@ Implement a class **`ScalarConverter`** containing a single static method:
 
 ```cpp
 static void convert(const std::string& literal);
-````
+```
 
 The method receives a string representing a C++ literal and must convert it into the four basic scalar types:
 
