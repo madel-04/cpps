@@ -24,11 +24,11 @@ public:
     DiamondTrap& operator=(const DiamondTrap& other);
     ~DiamondTrap();
 
+    void attack(const std::string& target);
     void whoAmI();
-//    void attack(const std::string& target);
 
 private:
-    std::string _name; //Sombrando el de ClapTrap
+    std::string _name;
 };
 
 #endif

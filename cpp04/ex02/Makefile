@@ -1,6 +1,6 @@
 NAME      := ex02
 CXX       := c++
-CXXFLAGS  := -Wall -Wextra -Werror -std=c++98 -pedantic
+CXXFLAGS  := -Wall -Wextra -Werror -std=c++98 -Wshadow
 
 SRC       := \
 	main.cpp \

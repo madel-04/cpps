@@ -27,7 +27,7 @@ int main() {
 
     std::cout << "\n=== Dynamic test (delete via base pointer) ===" << std::endl;
     ClapTrap* p = new ScavTrap("Bumblebee");
-    p->attack("target"); // si attack es virtual se llamará a ScavTrap::attack
-    delete p; // si ~ClapTrap es virtual, se llamará a ~ScavTrap y luego ~ClapTrap
+    p->attack("target");
+    delete p;
     return 0;
 }
