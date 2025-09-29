@@ -54,3 +54,6 @@ En resumen:
 .tpp = "template implementation file"
 Se usa para definir la implementación de clases o funciones plantilla
 Se incluye en el archivo de cabecera (.hpp) donde se declara la plantilla
+
+
+Para las clases plantillas, todo el código debe de estar disponible en el momento de la compilación. Eso significa que no podemos implemenar las funciones de un template en un .cpp separado, porque el compilador no podrá generar instancias para los distintos tipos. Otra forma sería definirlo todo en un .hpp
