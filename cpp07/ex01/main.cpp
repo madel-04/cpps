@@ -14,6 +14,21 @@ void doubleElement(T& elem) {
     elem = elem * 2;
 }
 
+// C++98-compatible free function to append "!" to a std::string
+void appendExclamation(std::string& s) {
+    s += "!";
+}
+
+// C++98-compatible free function to print a const double&
+void printConstDouble(const double& d) {
+    std::cout << d << " ";
+}
+
+// C++98-compatible free function to increment a double&
+void incrementDouble(double& d) {
+    d += 0.5;
+}
+
 int main() {
     // ==== TEST CON INT ====
     int intArray[] = {1, 2, 3, 4, 5};
@@ -39,9 +54,7 @@ int main() {
     std::cout << "\n";
 
     // modificamos las strings (no const)
-    iter(strArray, strSize, [](std::string& s) {
-        s += "!"; // añade un "!" a cada string
-    });
+    iter(strArray, strSize, appendExclamation);
 
     std::cout << "String array modificado: ";
     iter(strArray, strSize, printElement<std::string>);
@@ -53,19 +66,15 @@ int main() {
     size_t dblSize = sizeof(dblArray) / sizeof(dblArray[0]);
 
     std::cout << "Double array original: ";
-    iter(dblArray, dblSize, [](const double& d) {
-        std::cout << d << " ";
-    });
+    // C++98: use a free function for printing const double&
+    iter(dblArray, dblSize, printConstDouble);
     std::cout << "\n";
 
-    iter(dblArray, dblSize, [](double& d) {
-        d += 0.5; // incrementamos cada valor
-    });
+    // C++98: use a free function to increment double
+    iter(dblArray, dblSize, incrementDouble);
 
     std::cout << "Double array modificado: ";
-    iter(dblArray, dblSize, [](const double& d) {
-        std::cout << d << " ";
-    });
+    iter(dblArray, dblSize, printConstDouble);
     std::cout << "\n";
 
     return 0;

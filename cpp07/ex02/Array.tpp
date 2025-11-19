@@ -4,7 +4,7 @@
 #include "Array.hpp"
 
 template <typename T>
-Array<T>::Array() : _array(nullptr), _n(0) {}
+Array<T>::Array() : _array(NULL), _n(0) {}
 // Constructor sin parámetros   
 
 template <typename T>
