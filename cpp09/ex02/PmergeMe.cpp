@@ -50,41 +50,192 @@ void PmergeMe::displayAfter() const
     std::cout << std::endl;
 }
 
-// ---------------- Sorting (Ford-Johnson simplified) ----------------
+// ---------------- Jacobsthal Numbers ----------------
 
-// For simplicity, using insertion sort which is compatible with merge-insert
-void PmergeMe::insertionSortVector(std::vector<long long> &seq)
+size_t PmergeMe::jacobsthal(size_t n)
 {
-    for (size_t i = 1; i < seq.size(); ++i)
+    if (n == 0) return 0;
+    if (n == 1) return 1;
+    
+    size_t prev2 = 0;
+    size_t prev1 = 1;
+    size_t current = 1;
+    
+    for (size_t i = 2; i <= n; ++i)
     {
-        long long key = seq[i];
-        long long j = i - 1;
-        while (j >= 0 && seq[j] > key)
-        {
-            seq[j + 1] = seq[j];
-            --j;
-        }
-        seq[j + 1] = key;
+        current = prev1 + 2 * prev2;
+        prev2 = prev1;
+        prev1 = current;
     }
+    return current;
 }
 
-void PmergeMe::insertionSortDeque(std::deque<long long> &seq)
+// ---------------- Ford-Johnson Algorithm (Vector) ----------------
+
+void PmergeMe::binaryInsertVector(std::vector<long long>& sorted, long long value)
 {
-    for (size_t i = 1; i < seq.size(); ++i)
-    {
-        long long key = seq[i];
-        long long j = i - 1;
-        while (j >= 0 && seq[j] > key)
-        {
-            seq[j + 1] = seq[j];
-            --j;
-        }
-        seq[j + 1] = key;
-    }
+    std::vector<long long>::iterator pos = std::lower_bound(sorted.begin(), sorted.end(), value);
+    sorted.insert(pos, value);
 }
 
-void PmergeMe::sortVector() { insertionSortVector(_vector); }
-void PmergeMe::sortDeque()  { insertionSortDeque(_deque);  }
+std::vector<long long> PmergeMe::mergeInsertVector(std::vector<long long>& seq)
+{
+    if (seq.size() <= 1)
+        return seq;
+
+    // Step 1: Create pairs and sort each pair
+    std::vector<std::pair<long long, long long> > pairs;
+    bool hasStraggler = (seq.size() % 2 != 0);
+    long long straggler = hasStraggler ? seq.back() : 0;
+
+    for (size_t i = 0; i + 1 < seq.size(); i += 2)
+    {
+        if (seq[i] > seq[i + 1])
+            pairs.push_back(std::make_pair(seq[i], seq[i + 1]));
+        else
+            pairs.push_back(std::make_pair(seq[i + 1], seq[i]));
+    }
+
+    // Step 2: Recursively sort by larger elements
+    std::vector<long long> larger;
+    for (size_t i = 0; i < pairs.size(); ++i)
+        larger.push_back(pairs[i].first);
+
+    larger = mergeInsertVector(larger);
+
+    // Step 3: Create main chain with larger elements
+    std::vector<long long> result = larger;
+
+    // Step 4: Insert smaller elements using Jacobsthal sequence
+    std::vector<long long> pending;
+    for (size_t i = 0; i < pairs.size(); ++i)
+        pending.push_back(pairs[i].second);
+
+    // Insert first element at beginning
+    if (!pending.empty())
+    {
+        result.insert(result.begin(), pending[0]);
+        pending.erase(pending.begin());
+    }
+
+    // Use Jacobsthal sequence for optimal insertion order
+    size_t jacobIndex = 3;
+    size_t inserted = 0;
+   
+    while (inserted < pending.size())
+    {
+        size_t jacob = jacobsthal(jacobIndex);
+        size_t prevJacob = jacobsthal(jacobIndex - 1);
+        
+        // Insert elements in reverse order between Jacobsthal numbers
+        for (size_t pos = jacob - 1; pos >= prevJacob && pos < pending.size(); --pos)
+        {
+            binaryInsertVector(result, pending[pos]);
+            ++inserted;
+            if (pos == 0) break;
+        }
+        ++jacobIndex;
+    }
+
+    // Insert straggler if exists
+    if (hasStraggler)
+        binaryInsertVector(result, straggler);
+
+    return result;
+}
+
+void PmergeMe::fordJohnsonVector(std::vector<long long>& seq)
+{
+    seq = mergeInsertVector(seq);
+}
+void PmergeMe::sortVector()
+{
+    fordJohnsonVector(_vector);
+}
+
+// ---------------- Ford-Johnson Algorithm (Deque) ----------------
+
+void PmergeMe::binaryInsertDeque(std::deque<long long>& sorted, long long value)
+{
+    std::deque<long long>::iterator pos = std::lower_bound(sorted.begin(), sorted.end(), value);
+    sorted.insert(pos, value);
+}
+
+std::deque<long long> PmergeMe::mergeInsertDeque(std::deque<long long>& seq)
+{
+    if (seq.size() <= 1)
+        return seq;
+
+    // Step 1: Create pairs and sort each pair
+    std::vector<std::pair<long long, long long> > pairs;
+    bool hasStraggler = (seq.size() % 2 != 0);
+    long long straggler = hasStraggler ? seq.back() : 0;
+
+    for (size_t i = 0; i + 1 < seq.size(); i += 2)
+    {
+        if (seq[i] > seq[i + 1])
+            pairs.push_back(std::make_pair(seq[i], seq[i + 1]));
+        else
+            pairs.push_back(std::make_pair(seq[i + 1], seq[i]));
+    }
+
+    // Step 2: Recursively sort by larger elements
+    std::deque<long long> larger;
+    for (size_t i = 0; i < pairs.size(); ++i)
+        larger.push_back(pairs[i].first);
+
+    larger = mergeInsertDeque(larger);
+
+    // Step 3: Create main chain with larger elements
+    std::deque<long long> result = larger;
+
+    // Step 4: Insert smaller elements using Jacobsthal sequence
+    std::deque<long long> pending;
+    for (size_t i = 0; i < pairs.size(); ++i)
+        pending.push_back(pairs[i].second);
+
+    // Insert first element at beginning
+    if (!pending.empty())
+    {
+        result.insert(result.begin(), pending[0]);
+        pending.erase(pending.begin());
+    }
+
+    // Use Jacobsthal sequence for optimal insertion order
+    size_t jacobIndex = 3;
+    size_t inserted = 0;
+    
+    while (inserted < pending.size())
+    {
+        size_t jacob = jacobsthal(jacobIndex);
+        size_t prevJacob = jacobsthal(jacobIndex - 1);
+        
+        // Insert elements in reverse order between Jacobsthal numbers
+        for (size_t pos = jacob - 1; pos >= prevJacob && pos < pending.size(); --pos)
+        {
+            binaryInsertDeque(result, pending[pos]);
+            ++inserted;
+            if (pos == 0) break;
+        }
+        ++jacobIndex;
+    }
+
+    // Insert straggler if exists
+    if (hasStraggler)
+        binaryInsertDeque(result, straggler);
+
+    return result;
+}
+
+void PmergeMe::fordJohnsonDeque(std::deque<long long>& seq)
+{
+    seq = mergeInsertDeque(seq);
+}
+
+void PmergeMe::sortDeque()
+{
+    fordJohnsonDeque(_deque);
+}
 
 // ---------------- Measure Time ----------------
 
