@@ -253,10 +253,29 @@ void PmergeMe::measureTime()
     std::cout << "Time to process a range of " << _vector.size() << " elements with std::vector : " << elapsed_us << " us" << std::endl;
 
     // Deque
-    std::deque<long long> tmpDeq = _deque; // copy to preserve original
+    std::deque<long long> tmpDeq = _deque;
     start = clock();
     sortDeque();
     end = clock();
     elapsed_us = double(end - start) / CLOCKS_PER_SEC * 1e6;
     std::cout << "Time to process a range of " << _deque.size() << " elements with std::deque  : " << elapsed_us << " us" << std::endl;
 }
+
+
+/*
+Vector: almacena los elementos en bloques contiguos de memoria
+Deque: Usa múltiples bloques de memoria no contiguo
+
+Vector es más rapido al final y más lento al inicio mientras que deque es rápido
+en los extremos pero mas lento en medio.
+
+De rendimiento de acceso, vector tiene un acceso directo muy rápido y deque más lento
+
+Vector puede desperdidicar memoria si tiene capacidad reservada no usada, puede causae realocaciones
+costosas al crecer
+Deque no necesita realocar toda la estructura al crecer, pero usa más memoria debido a la indireccion
+
+Conclusión:
+    - Vector: cuando se necesita acceso rápido y uso eficiente de memoria contigua
+    - Deque: cuando se requiere inserción y eliminación eficiente en ambos extremos
+*/
