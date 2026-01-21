@@ -34,3 +34,8 @@ class PmergeMe
 };
 
 #endif
+
+/*
+Vector: Mejor rendimiento para acceso aleatorio y memoria contigua
+Deque: Mejor para inserciones en ambos extremos
+*/

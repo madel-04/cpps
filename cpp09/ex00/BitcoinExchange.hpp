@@ -23,21 +23,14 @@ std::map<std::string, float> _data;
     void loadDatabase(const std::string& filename);
     float getExchangeRate(const std::string& date) const;
     void processInput(const std::string& inputFile) const;
-
-/*    class FileException : public std::runtime_error {
-    public:
-        explicit FileException(const std::string& message) : std::runtime_error(message) {}
-    };
-
-    class DateException : public std::runtime_error {
-    public:
-        explicit DateException(const std::string& message) : std::runtime_error(message) {}
-    };
-
-    class ValueException : public std::runtime_error {
-    public:
-        explicit ValueException(const std::string& message) : std::runtime_error(message) {}*/
-
 };
 
 #endif
+
+/*
+std::map es un árbol binario de búsqueda balanceado en el que cada nodo
+tiene un par clave-valor
+Las claves se ordenan alfabeticamente y se autobalancea para mantener
+operaciones eficientes
+
+*/

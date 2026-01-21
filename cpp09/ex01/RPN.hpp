@@ -21,3 +21,12 @@ public:
 };
 
 #endif
+
+/*
+El contendor tiene funcionalidad LIFO (Last In, First Out)
+Por defecto usa std::deque internamiente, y solo permite el acceso
+al elemento superior (top)
+No permite la iteración ni acceso aleatorio
+
+Se usa este contenedor xq el último operando es el primero que se usa
+*/
